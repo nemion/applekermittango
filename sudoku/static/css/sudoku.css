@@ -1,0 +1,51 @@
+.no-spin::-webkit-inner-spin-button, 
+.no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+    -moz-appearance:textfield !important;
+}
+
+.base {
+    margin-top: 20px;
+}
+
+.puzzle-form .fields .field input { 
+    text-align: center; 
+}
+
+@media only screen and (max-width:767px) {
+    .content-mobile {
+        margin-top: 20px!important;
+    }
+    
+    .puzzle-form .fields .field {
+        padding: .3em!important;
+    }
+
+    .puzzle-form .fields .field input {
+        padding: .3em;
+    }
+    
+    #results-row {
+        display: table-row!important;
+    }
+    
+    #results-cell {
+        font-weight: 400 !important;
+        display: table-cell!important;
+    }
+}
+
+@media only screen and (max-width:1024px) {
+    .content-mobile {
+        margin-top: 20px!important;
+    }
+    
+    .puzzle-form .fields .field {
+        
+    }
+
+    .puzzle-form .fields .field input {
+        padding: .3em;
+    }
+}

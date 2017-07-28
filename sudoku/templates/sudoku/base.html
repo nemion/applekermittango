@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Sudoku Solver</title>
+        
+        <!-- Standard Meta -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sudoku.css' %}">
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
+        <script src="{% static 'js/sudoku.js' %}"></script>
+    </head>
+    <body>
+    <div class="ui grid container">
+        <div class="row base">
+            <div class="six wide computer six wide tablet sixteen wide mobile column">
+                <div class="ui segment" style="margin-top:20px;">
+                    <h1 class="ui header">
+                        <a{% if request.get_full_path != "/sudoku/" %} href="/sudoku/"{% endif %}>Sudoku Solver</a>
+                    </h1>
+                    <p>Welcome to the sudoku solver!</p>
+                </div>
+                <div class="ui segment" style="margin-top:20px;">
+                    {% block panel %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    </body>
+</html>

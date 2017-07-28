@@ -1,0 +1,32 @@
+h1, h2, h3, h4 {
+    color: black;
+}
+
+.container {
+    margin-bottom: 40px;
+}
+
+.page-header {
+    background-color: dimgrey;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px;
+    padding: 5px;
+    border: none;
+}
+
+.fill-in {
+    flex-grow: 1;
+}
+
+.choices {
+    padding: 5px 15px 5px 15px;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}

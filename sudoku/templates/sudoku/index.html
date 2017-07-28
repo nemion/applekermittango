@@ -1,0 +1,209 @@
+{% extends 'sudoku/base.html' %}
+
+{% block panel %}
+<h3 class="ui header">
+    How to
+</h3>
+<p>Fill in the squares with the numbers you have, and leave the rest blank or use 0, which would be easier. If you don't have any puzzles, try using the sample values.</p>
+<button type="button" class="ui secondary button" id="sample-btn">Sample</button>
+<br>
+<br>
+<p>Enjoy!</p>
+{% endblock %}
+
+{% block content %}
+
+    <div class="eight wide computer ten wide tablet sixteen wide mobile column">
+        <div class="container">
+            {{ puzzle_form.non_field_errors }}
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="ui internally celled equal width grid puzzle-form content-mobile">
+                    <div class="row">
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s11 }}</div>
+                                    <div class="field">{{ puzzle_form.s12 }}</div>
+                                    <div class="field">{{ puzzle_form.s13 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s21 }}</div>
+                                    <div class="field">{{ puzzle_form.s22 }}</div>
+                                    <div class="field">{{ puzzle_form.s23 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s31 }}</div>
+                                    <div class="field">{{ puzzle_form.s32 }}</div>
+                                    <div class="field">{{ puzzle_form.s33 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s14 }}</div>
+                                    <div class="field">{{ puzzle_form.s15 }}</div>
+                                    <div class="field">{{ puzzle_form.s16 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s24 }}</div>
+                                    <div class="field">{{ puzzle_form.s25 }}</div>
+                                    <div class="field">{{ puzzle_form.s26 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s34 }}</div>
+                                    <div class="field">{{ puzzle_form.s35 }}</div>
+                                    <div class="field">{{ puzzle_form.s36 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s17 }}</div>
+                                    <div class="field">{{ puzzle_form.s18 }}</div>
+                                    <div class="field">{{ puzzle_form.s19 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s27 }}</div>
+                                    <div class="field">{{ puzzle_form.s28 }}</div>
+                                    <div class="field">{{ puzzle_form.s29 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s37 }}</div>
+                                    <div class="field">{{ puzzle_form.s38 }}</div>
+                                    <div class="field">{{ puzzle_form.s39 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s41 }}</div>
+                                    <div class="field">{{ puzzle_form.s42 }}</div>
+                                    <div class="field">{{ puzzle_form.s43 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s51 }}</div>
+                                    <div class="field">{{ puzzle_form.s52 }}</div>
+                                    <div class="field">{{ puzzle_form.s53 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s61 }}</div>
+                                    <div class="field">{{ puzzle_form.s62 }}</div>
+                                    <div class="field">{{ puzzle_form.s63 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s44 }}</div>
+                                    <div class="field">{{ puzzle_form.s45 }}</div>
+                                    <div class="field">{{ puzzle_form.s46 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s54 }}</div>
+                                    <div class="field">{{ puzzle_form.s55 }}</div>
+                                    <div class="field">{{ puzzle_form.s56 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s64 }}</div>
+                                    <div class="field">{{ puzzle_form.s65 }}</div>
+                                    <div class="field">{{ puzzle_form.s66 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s47 }}</div>
+                                    <div class="field">{{ puzzle_form.s48 }}</div>
+                                    <div class="field">{{ puzzle_form.s49 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s57 }}</div>
+                                    <div class="field">{{ puzzle_form.s58 }}</div>
+                                    <div class="field">{{ puzzle_form.s59 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s67 }}</div>
+                                    <div class="field">{{ puzzle_form.s68 }}</div>
+                                    <div class="field">{{ puzzle_form.s69 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s71 }}</div>
+                                    <div class="field">{{ puzzle_form.s72 }}</div>
+                                    <div class="field">{{ puzzle_form.s73 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s81 }}</div>
+                                    <div class="field">{{ puzzle_form.s82 }}</div>
+                                    <div class="field">{{ puzzle_form.s83 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s91 }}</div>
+                                    <div class="field">{{ puzzle_form.s92 }}</div>
+                                    <div class="field">{{ puzzle_form.s93 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s74 }}</div>
+                                    <div class="field">{{ puzzle_form.s75 }}</div>
+                                    <div class="field">{{ puzzle_form.s76 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s84 }}</div>
+                                    <div class="field">{{ puzzle_form.s85 }}</div>
+                                    <div class="field">{{ puzzle_form.s86 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s94 }}</div>
+                                    <div class="field">{{ puzzle_form.s95 }}</div>
+                                    <div class="field">{{ puzzle_form.s96 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui form">
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s77 }}</div>
+                                    <div class="field">{{ puzzle_form.s78 }}</div>
+                                    <div class="field">{{ puzzle_form.s79 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s87 }}</div>
+                                    <div class="field">{{ puzzle_form.s88 }}</div>
+                                    <div class="field">{{ puzzle_form.s89 }}</div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">{{ puzzle_form.s97 }}</div>
+                                    <div class="field">{{ puzzle_form.s98 }}</div>
+                                    <div class="field">{{ puzzle_form.s99 }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div> 
+                <div class="ui form" style="margin-top: 15px; text-align: right;">
+                    <button type="submit" class="ui primary button">Submit</button>
+                    <a class="ui button" href="/sudoku/">Discard</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

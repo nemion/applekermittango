@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Polls Index</title>
+        
+        <!-- Standard Meta -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css" />
+        <link rel="stylesheet" href="{% static 'css/polls.css' %}">
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
+        <script src="{% static 'js/polls.js' %}"></script>
+    </head>
+    <body>
+    <div class="ui grid container">
+        <div class="row">
+            <div class="column">
+                <div class="ui message" style="margin-top:20px;">
+                    <h1 class="ui header">
+                        <a{% if request.get_full_path != "/polls/" %} href="/polls/"{% endif %}>Polls Index</a>
+                    </h1>
+                    <p>Welcome to the polls index!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="ten wide computer ten wide tablet sixteen wide mobile column">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

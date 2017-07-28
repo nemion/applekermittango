@@ -1,0 +1,29 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+
+<h1>
+    {{ question.question_text }}
+</h1>
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+<div class="ui form">
+<div class="grouped fields">
+    {% csrf_token %}
+    <div class="ui segments choices">
+    {% for choice in question.choice_set.all %}
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    <button class="ui button" type="submit">Vote</button>
+    <a class="ui button" href="{% url 'polls:results' question.id %}">See results</a>
+</div>
+</div>
+</form>
+
+{% endblock %}

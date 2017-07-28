@@ -1,0 +1,55 @@
+{% extends 'sudoku/base.html' %}
+
+{% block panel %}
+<h3 class="ui header">
+    Result
+</h3>
+<p>I hope I got it right.</p>
+<p>Note: if the puzzle isn't valid, i.e. doesn't have a unique solution, the answer given is only one of the many possible answers.</p>
+{% endblock %}
+
+{% block content %}
+<div class="eight wide computer ten wide tablet sixteen wide mobile column">
+    <div class="container">
+        <div class="ui grid">
+            <div class="row">                        
+                {% if valid %}
+                <div class="ten wide computer thirteen wide tablet twelve wide mobile column">
+                    <div class="container content-mobile">
+                        <table class="ui basic celled table results">
+                            <tbody>
+                            {% for row in results %}
+                                <tr id="results-row">
+                                {% for square in row %}
+                                    <td class="center aligned single line collapsing" id="results-cell">
+                                        {{ square }}
+                                    </td>
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                {% else %}
+                <div class="twelve wide column">
+                    <div class="ui warning message" style="margin-top:20px;">
+                        <h5 class="ui header">
+                            <i class="warning icon"></i>
+                            <div class="content">
+                                An error occured: puzzle might contain duplicates.
+                                Please try again.
+                            </div>
+                        </h5>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="row" style="padding-left: 1rem;">
+                <a href="/sudoku/" class="ui button">Start again</a>
+            </div>
+        </div>
+     </div>
+</div>
+{% endblock %}

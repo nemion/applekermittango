@@ -1,0 +1,29 @@
+{% extends 'polls/base.html' %}
+{% load poll_extras %}
+
+{% block content %}
+
+
+<h1>
+    {{ question.question_text }}
+</h1>
+{% for choice in question.choice_set.all|ordered:'-votes' %}
+    <div class="ui grid">
+        <div class="left floated six wide column">
+            {{ choice.choice_text }}
+        </div>
+        <div class="right floated six wide column right aligned">
+            {{ choice.votes }} vote{{ choice.votes|pluralize }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="ui teal progress voting-results" data-percent="{{ question|get_percentage:choice }}">
+        <div class="bar"><div class="progress">{{ question|get_percentage:choice }}%</div></div>
+        </div>
+    </div>
+{% endfor %}
+
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+
+{% endblock %}

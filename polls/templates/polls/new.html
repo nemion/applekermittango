@@ -1,0 +1,48 @@
+{% extends 'polls/base.html' %}
+{% load poll_extras %}
+
+{% block content %}
+    <div class="container">
+    <h1 class="ui header"><i class="write icon"></i>
+      <div class="content">
+        New Poll
+      </div>
+    </h1>
+    {{ question_form.non_field_errors }}
+    {{ choice_forms.non_field_errors }}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="ui form">
+            <h4 class="ui dividing header">Question</h4>
+            <div class="field">
+                {{ question_form.question_text }}
+                {{ question_form.question_text.errors }}
+            </div>
+            
+            <h4 class="ui dividing header">Choices <small>(at least two required)</small></h4>
+            {% with lim=2 %}
+            {% for cform in choice_forms|limit:lim %}
+            <div class="field required">
+                {{ cform.choice_text }}
+                {{ cform.choice_text.errors }}
+            </div>
+            {% endfor %}
+            <div class="more-fields">
+            {% for cform in choice_forms|limitfrom:lim %}
+            <div class="field" id="extra-field{{ forloop.counter }}" style="display:none;">
+                {{ cform.choice_text }}
+                {{ cform.choice_text.errors }}
+            </div>
+            {% endfor %}
+            </div>
+            {% endwith %}
+            <div class="field" style="text-align:right;">
+                <button type="button" class="ui button" id="more-btn">Add another choice</button>
+                <h5 class="ui red header" id="choice-max-warning" style="display:none;">Maximum number of choices reached!</h5>
+            </div>
+            <button type="submit" class="ui primary button">Submit</button>
+            <button type="button" class="ui button">Discard</button>
+        </div>
+    </form>
+    </div>
+{% endblock %}
