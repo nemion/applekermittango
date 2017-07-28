@@ -100,7 +100,7 @@ class Puzzle() :
         for sq in self.listSolved :
             self.listRows[sq.row].append(sq)
             self.listColumns[sq.col].append(sq)
-            self.listBoxes[sq.box].append(sq)
+            self.listBoxes[int(sq.box)].append(sq)
             
         for sq in self.listToSolve :
             self.listRowAns[sq.row].append(sq)
