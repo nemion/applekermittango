@@ -238,8 +238,6 @@ class Puzzle() :
     
     
     def display(self) :
-        print "\n/******GRID "+str(self.id)+"*******/"
-        
         if self.isSolved():
             print "/*****(SOLVED)*****/"
         
