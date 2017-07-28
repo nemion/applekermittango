@@ -234,24 +234,7 @@ class Puzzle() :
         self.listRowAns[sq.row].remove(sq2s)
         self.listColAns[sq.col].remove(sq2s)
         self.listBoxAns[sq.box].remove(sq2s)
-        del sq2s
-    
-    
-    def display(self) :
-        if self.isSolved():
-            print "/*****(SOLVED)*****/"
-        
-        for r in range(9) :
-            row = ""
-            for c in range(9) :
-                if self.getItem(r,c) :
-                    row+=(str(self.getItem(r,c).value))
-                else :
-                    row+="0"
-            print row
-            
-        print "\n"
-    
+        del sq2s    
     
     def isSolved(self) :
         if len(self.listToSolve)>0 :
@@ -297,29 +280,6 @@ class Puzzle() :
                 return False
             
         return True
-    
-    
-    @classmethod
-    def createFromFile(cls, fileName) :
-        listPuzzles = []
-        fo = open(str(fileName), "r")
-        line = fo.readline()
-        
-        while(line) : 
-            if (line=="") :
-                line = False
-            if "Grid" in line :
-                id=int(line[5:7])
-                listNb = []
-                for i in range(0, 9):
-                    line = fo.readline()
-                    row = [int(number) for number in line[0:9]]
-                    listNb.append(row)
-                pz = cls(listNb,id)
-                listPuzzles.append(pz)
-            line = fo.readline()
-        fo.close()
-        return listPuzzles
     
     @classmethod
     def createFromText(cls, txt) :
