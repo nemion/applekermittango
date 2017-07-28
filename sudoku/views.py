@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from .forms import PuzzleForm
-import solver
+import .solver
 
 
 def index(request):
