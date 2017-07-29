@@ -10,7 +10,7 @@ class SquareSolved() :
         self.value = value
         self.row = row
         self.col = col
-        self.box = row/3*3 + col/3
+        self.box = int(row/3)*3 + int(col/3)
         
     def __str__ (self) :
         return "Row="+str(self.row)+" Col="+str(self.col)+" Box="+str(self.box)+"; Val="+str(self.value)
