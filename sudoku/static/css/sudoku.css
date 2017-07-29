@@ -18,8 +18,13 @@
         margin-top: 20px!important;
     }
     
+    .puzzle-form .fields {
+        display: inline-flex;
+    }
+    
     .puzzle-form .fields .field {
         padding: .2em!important;
+        flex-grow: 1;
     }
 
     .puzzle-form .fields .field input {
