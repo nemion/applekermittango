@@ -21,7 +21,7 @@ class SquareToSolve():
         self.candidates = set(candidates) if candidates else set()
         self.row = row
         self.col = col
-        self.box = row/3*3 + col/3
+        self.box = int(row/3)*3 + int(col/3)
         
     def __eq__ (self, other) :
         return self.row==other.row and self.col==other.col
