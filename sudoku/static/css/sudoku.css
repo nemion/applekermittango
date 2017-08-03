@@ -8,6 +8,12 @@
 .base {
     margin-top: 20px;
 }
+    
+.puzzle-form .fields {
+    flex-wrap: nowrap!important;
+    justify-content: space-around;
+
+}
 
 .puzzle-form .fields .field input { 
     text-align: center; 
@@ -18,13 +24,8 @@
         margin-top: 20px!important;
     }
     
-    .puzzle-form .fields {
-        display: inline-flex;
-    }
-    
     .puzzle-form .fields .field {
         padding: .2em!important;
-        flex-grow: 1;
     }
 
     .puzzle-form .fields .field input {
