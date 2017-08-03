@@ -52,4 +52,12 @@ $(document).ready(function() {
         }
     });
     
+    $('#discard-btn').on('click', function(){
+        for(i=1; i<10; i++) {
+            for(j=1; j<10; j++) {
+                $("#id_s" + i.toString() + j.toString()).val("");
+            }
+        }
+    });
+    
 });
