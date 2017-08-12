@@ -232,7 +232,7 @@ def question_new_m(request, quiz_id, section_number):
                             question_text = request.POST['question_text'],
                             points = request.POST['question_points'])
         question.save()
-        for post_item in sorted(request.POST.iterkeys()):
+        for post_item in sorted(request.POST.keys()):
             if post_item.startswith('question'):
                 match = re.match(r"question_new__choice_(?P<choice_id>(\d+))", post_item)
                 if match and post_item.endswith('value'):
@@ -293,7 +293,7 @@ def question_edit(request, question_id):
             
         question.save()
 
-        for post_item in request.POST.iterkeys():
+        for post_item in request.POST.keys():
             if post_item.startswith('question'):
                 match = re.match(r"question_(?P<question_id>(\d+))__choice_(?P<choice_id>(\d+))", post_item)
                 if match and post_item.endswith('value'):
@@ -360,7 +360,7 @@ def submit(request, quiz_id, section_number):
                 })
 
             points, final_score, answers = 0, True, ""
-            for key in sorted(request.POST.iterkeys()):
+            for key in sorted(request.POST.keys()):
                 value = request.POST[key]
                 if key.startswith('question'):
                     question = Question.objects.get(pk=key[9:])
