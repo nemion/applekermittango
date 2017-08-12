@@ -17,7 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^', include('authentication.urls')),
     url(r'^polls/', include('polls.urls')),
     url(r'^sudoku/', include('sudoku.urls')),
+    url(r'^quiz/', include('quiz.urls')),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,0 +1,23 @@
+{% extends 'quiz/base.html' %}
+{% load quiz_extras %}
+
+{% block content %}
+<div class="row">
+    <div class="ten wide computer ten wide tablet sixteen wide mobile column">
+        <div class="ui segment">
+            <h2 class="ui center aligned header">{{ quiz.quiz_title }}</h2>
+            <p>{{ quiz.quiz_description }}</p>
+            <br>
+            <p>Total points: <strong>{{ quiz|quiz_points }}</strong></p>
+            <p>Duration: <strong>{{ quiz|duration }}</strong></p>
+            <br>
+            <p>This quiz consists of <strong>{{ quiz|sections_str }}</strong> and <strong>{{ quiz|questions_str }}</strong>.</p>
+            <br>
+            <p>Each section has a fixed time limit and your answers will automatically be submitted once this limit is reached. Please be careful while typing your answers. Typos will not be tolerated.</p>
+            <br>
+            <div class="container" style="text-align:center;"><a href="section/{% if quiz|sections %}1/{% else %}0/{% endif %}" class="ui button primary">Begin</a></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

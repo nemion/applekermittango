@@ -1,0 +1,33 @@
+{% extends 'quiz/base.html' %}
+{% load quiz_extras %}
+
+{% block content %}
+<div class="row">
+    <div class="ten wide computer ten wide tablet sixteen wide mobile column">
+        
+        {% if request.user.is_staff %}
+            <div class="ui segment">
+                <h3>Welcome, {{ user.get_username }}.</h3>
+                <p>You are authorized to edit the quizzes.</p>
+                <br>
+            </div>
+            <a href="list/" class="ui button primary">Next</a>
+        {% elif user.is_authenticated %}
+            <div class="ui segment">
+                <h3>Welcome!</h3>
+                <p>Before starting the test, please verify that your information below is correct.</p>
+                <p><strong>Identification Number</strong>: {{ user.get_username }}</p>
+                <p><strong>Name:</strong> {{ user|full_name }}</p>
+                <br>
+            </div>
+            <a href="list/" class="ui button primary">Next</a>
+        {% else %}
+            <div class="ui segment">
+                <p>Please sign in to continue.</p>
+                <p><a href="/login/">Go to login page.</a></p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'authentication/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="six wide computer six wide tablet sixteen wide mobile column">
+        {% if form.errors and not form.non_field_errors %}
+            <p class="errornote">
+            {% if form.errors.items|length == 1 %}Please correct the error below.{% else %}Please correct the errors below.{% endif %}
+            </p>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="ui warning message">
+                    Please enter a correct identification number and password.
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" id="login-form">{% csrf_token %}
+        <div class="ui form">
+          <div class="field">
+            {{ form.username.errors }}
+            <label for="id_username">Identification Number:</label> {{ form.username }}
+          </div>
+          <div class="field">
+            {{ form.password.errors }}
+            {{ form.password.label_tag }} {{ form.password }}
+            <input type="hidden" name="next" value="{{ next }}" />
+          </div>
+          <div class="password-reset-link">
+            <a href="{{ password_reset_url }}">Don't know your password or username?</a>
+          </div>
+          <div class="field" style="text-align: center;">
+              <label>&nbsp;</label><button class="ui primary button" type="submit">Log In</button>
+          </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

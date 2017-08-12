@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>User</title>
+        
+        <!-- Standard Meta -->
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css" />
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
+    </head>
+    <body>
+    <div class="ui middle aligned centered grid container" style="padding-top:5%">
+        <div class="ui message">
+            <h1 class="ui header">Account</h1>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+    </body>
+</html>

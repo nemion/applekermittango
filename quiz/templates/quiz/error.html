@@ -1,0 +1,17 @@
+{% extends 'quiz/base.html' %}
+{% load quiz_extras %}
+
+{% block content %}
+<div class="row">
+    <div class="ten wide computer ten wide tablet sixteen wide mobile column">
+        <div class="ui segment">
+            {% if error_message %}
+            <h3>{{ error_message.title }}</h3>
+            <p>{{ error_message.content }}</p>
+            {% endif %}
+            <p><a href="/quiz/">Home</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

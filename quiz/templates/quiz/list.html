@@ -1,0 +1,110 @@
+{% extends 'quiz/base.html' %}
+{% load staticfiles %}
+{% load quiz_extras %}
+
+{% block head_extra %}
+<script src="{% static 'js/quiz/list.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="ten wide computer ten wide tablet sixteen wide mobile column">
+        {% if quiz_list %}
+            {% for quiz in quiz_list %}
+                <div class="ui segment quiz">
+                    <h2 class="ui header">{{ quiz.quiz_title }}</h2>
+                    <p>{{ quiz.quiz_description }}</p>
+                    <br>
+                    <p>This quiz is only available from <strong>{{ quiz.start_date }}</strong> until <strong>{{ quiz.end_date }}</strong></p>
+                    <div class="container" style="text-align:right;">
+                        {% if request.user.is_staff %}
+                            <div class="ui button secondary edit" data-value={{ quiz.id }}>Edit</div>
+                            <div class="ui button negative delete" data-value={{ quiz.id }}>Delete</div>
+                        {% endif %}
+                        <a href="{% url 'quiz:detail' quiz.id %}" class="ui button primary">Select</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="ui segment">
+            <p>No quiz is available</p>
+        </div>
+        {% endif %}
+        {% if request.user.is_staff %}
+            <div class="ui fluid basic button" id="add-quiz">
+                <i class="ui icon add"></i>Add a new quiz
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!--   Quiz Modal   -->
+<div class="ui modal quiz">
+    <i class="close icon"></i>
+    <div class="header">Edit section</div>
+    <div class="scrolling content">
+        <form id="quiz-form" action="" method="post" class="ui form">
+            {% csrf_token %}
+            <h4 class="ui dividing header" style="margin-top:0px;">Title</h4>
+            <div class="field">
+                <input type="text" name="quiz_title" id="quiz_title" value="" required />
+            </div>
+            <h4 class="ui dividing header" style="margin-top:0px;">Date and Time</h4>
+            <div class="fields">
+                <div class="five wide field">
+                    <label>Start</label>
+                    <input type="date" name="quiz_start_date" id="quiz_start_date" required />
+                </div>
+                <div class="three wide field">
+                    <label>&nbsp;</label>
+                    <input type="time" name="quiz_start_date_time" id="quiz_start_date_time" required />
+                </div>
+                <div class="five wide field">
+                    <label>End</label>
+                    <input type="date" name="quiz_end_date" id="quiz_end_date" required />
+                </div>
+                <div class="three wide field">
+                    <label>&nbsp;</label>
+                    <input type="time" name="quiz_end_date_time" id="quiz_end_date_time" required />
+                </div>
+            </div>
+            <h4 class="ui dividing header" style="margin-top:0px;">Description</h4>
+            <div class="field">
+                <textarea name="quiz_description" id="quiz_description" value=""></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui button cancel">Cancel</div>
+        <input type="submit" class="ui primary button" form="quiz-form" value="Save"/>
+    </div>
+</div>
+<!--   Quiz Modal ends -->
+
+<!--   Action Confirmation Modal   -->
+<div class="ui basic modal action">
+  <div class="ui icon header">
+    <i class="trash icon"></i>
+    Delete Quiz
+  </div>
+  <div class="content" style="text-align: center;">
+    <p>This change will be permanent and the questions will not be available to recover.</p>
+    <p>Are you sure you want to continue?</p>
+  </div>
+  <div class="actions" style="text-align: center;">
+    <form action="delete/" method="post">
+        {% csrf_token %}
+        <div class="ui red basic cancel inverted button">
+          <i class="remove icon"></i>
+          No
+        </div>
+        <button type="submit" class="ui green ok inverted button">
+          <i class="checkmark icon"></i>
+          Yes
+        </button>
+    </form>
+  </div>
+</div>
+<!--   Action Confirmation Modal ends   -->
+
+{% endblock %}

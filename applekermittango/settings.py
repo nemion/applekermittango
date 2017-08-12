@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kh-tsfm45e*hx$e@$^(_4bamb4k1qt#!5-o*d_bqf^zq#6j@)n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'applekermittango.pythonanywhere.com']
 
@@ -31,8 +31,11 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'applekermittango.pythonanywhere.com'
 # Application definition
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
-    'sudoku.apps.SudokuConfig',
+    'authentication',
+    'polymorphic',
+    'polls',
+    'sudoku',
+    'quiz',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,3 +126,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+# Login Configuration
+LOGIN_REDIRECT_URL = '/account/'
+LOGIN_URL = '/'

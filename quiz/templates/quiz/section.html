@@ -1,0 +1,293 @@
+{% extends 'quiz/base.html' %}
+{% load staticfiles %}
+{% load quiz_extras %}
+
+{% block head_extra %}
+<script src="{% static 'js/quiz/section.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="ten wide computer ten wide tablet sixteen wide mobile column" id="main_content">
+    {% if request.user.is_staff %}
+        <div class="container" style="margin-bottom:20px;text-align:center;">
+            <a href="../../" class="ui primary button">
+              Back
+            </a>
+        </div>
+    {% else %}
+        {% if not error_message %}
+        <div class="left ui rail" style="text-align:right;">
+            <div class="ui sticky" style="padding-top:80px;">
+                <div class="ui message">
+                    <h2 class="ui header" id="timer">Starting timer...</h2>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+    {% if section %}
+        <!--   Steps begin   -->
+        <div class="ui grid" style="margin-bottom:10px;">
+            <div class="{% if request.user.is_staff %}thirteen{% else %}sixteen{% endif %} wide column">
+                <div class="ui fluid steps">
+                    {% for section_step in section|sections %}
+                        {% if request.user.is_staff %}
+                            <a href="{% url 'quiz:section' quiz_id=section_step.quiz.id section_number=section_step.number %}" class="{% if section_step == section %}active {% endif %}step">
+                                <div class="content">
+                                    <div class="title">{{ section_step.section_title }}</div>
+                                </div>
+                            </a>
+                        {% else %}
+                            <div class="{% if section_step == section %}active {% endif %}step">
+                                <div class="content">
+                                    <div class="title">{{ section_step.section_title }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+            <div class="three wide middle aligned column">
+                <div class="ui fluid basic button" id="add-section"><i class="icon plus"></i><span class="menu_desc">Section</span></div>
+            </div>
+            {% endif %}
+        </div>
+        <!--   Steps end   -->
+            
+        <!--   Section header begins   -->
+        {% if request.user.is_staff %}
+            <div class="ui fluid negative button" id="delete-section" data-value="{{ section.id }}" style="margin-bottom:20px;">
+              <i class="icon delete"></i><span class="menu_desc">Delete this section</span>
+            </div>
+        
+            <div class="ui one top attached buttons">
+                <div class="ui button" id="edit-section" data-value="{{ section.id }}">
+                  <i class="icon edit"></i><span class="menu_desc">Edit</span>
+                </div>
+            </div>
+        {% endif %}
+        <div class="ui bottom attached center aligned segment">
+            <h2 class="ui header">{{ section.section_title }}<br></h2>
+            <p>({{ section|section_points }} points)</p>
+            <p>{{ section.section_description }}</p>
+        </div>
+        <!--   Section header ends   -->
+            
+        <!--   Warning begins   -->
+        {% if error_message and not request.user.is_staff %}
+            <div class="ui large negative icon message">
+                <i class="warning circle icon"></i>
+                <div class="content">
+                    <div class="header">
+                        {{ error_message.title }}
+                    </div>
+                    <p>{{ error_message.content }}</p>
+                </div>
+            </div>
+            <div class="container" style="text-align:center;">
+                <a href="{% url 'quiz:next_section' quiz_id=section.quiz.id section_number=section.number %}" class="ui center button primary">Next</a>
+            </div>
+        
+        <!--   Warning ends   --> 
+        {% else %}
+            <form id="submit-form" action="{% url 'quiz:submit' quiz_id=section.quiz.id section_number=section.number %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="time_limit" id="time_limit" value="{{ section.time_limit.total_seconds }}" />
+            {% for question in section.question_set.all|order_by:'number' %}
+                {% if request.user.is_staff %}
+                    <div class="ui four top attached buttons">
+                        <div class="ui button edit question" data-value="{{ question.id }}">
+                            <i class="icon edit"></i><span class="menu_desc">Edit</span>
+                        </div>
+                        <a href="{% url 'quiz:question_move_up' question_id=question.id %}" class="ui button">
+                            <i class="icon angle up"></i><span class="menu_desc">Move Up</span>
+                        </a>
+                        <a href="{% url 'quiz:question_move_down' question_id=question.id %}" class="ui button">
+                            <i class="icon angle down"></i><span class="menu_desc">Move Down</span>
+                        </a>
+                        <a href="{% url 'quiz:question_delete' question_id=question.id %}" class="ui button">
+                            <i class="icon delete"></i><span class="menu_desc">Delete</span>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <div class="ui bottom {% if request.user.is_staff %}attached {% endif %}segment" id="segment-q{{ forloop.counter }}">
+                    <p>{{ question.question_text|linebreaks }}</p>
+                    {% if question|is_multiplechoice %}
+                        <div class="ui form">
+                            <div class="grouped fields">
+                            {% for choice in question.choice_set.all %}
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="question_{{ question.id }}" id="question_{{ forloop.parentloop.counter }}__choice_{{ forloop.counter }}" value="{{ choice.id }}" />
+                                        <label for="question_{{ forloop.parentloop.counter }}__choice_{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    {% elif question|is_fillin %}
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="question_{{ question.id }}" id="" value="" />
+                            </div>
+                        </div>
+                    {% elif question|is_essay %}
+                        <div class="ui form">
+                            <div class="field">
+                                <label>Answer (max {{ question.max_characters }} characters)</label>
+                                <textarea name="question_{{ question.id }}" maxlength="{{ question.max_characters }}"></textarea>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="ui top right attached label">{{ question.points }} pts</div>
+                </div>
+            {% endfor %}
+
+            {% if request.user.is_staff %}
+                <div class="container" style="margin-bottom:20px;">
+                    <div class="three ui basic buttons">
+                        <div class="ui button add-question" id="add-multiple">
+                          <i class="icon plus"></i>Multiple choice question
+                        </div>
+                        <div class="ui fluid button add-question" id="add-fill">
+                          <i class="icon plus"></i>Fill in the blank question
+                        </div>
+                        <div class="ui fluid button add-question" id="add-essay">
+                          <i class="icon plus"></i>Essay question
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="container" style="text-align:center;">
+                <button type="submit" class="ui center button primary">Next</button>
+            </div>
+            </form>
+        {% endif %}
+    
+    {% else %}
+        <!--   Steps begin   -->
+        <div class="ui grid" style="margin-bottom:10px;">
+            <div class="{% if request.user.is_staff %}thirteen{% else %}sixteen{% endif %} wide column">
+                <div class="ui fluid steps">
+                    <div class="active step">
+                        <div class="content">
+                            <div class="title">No section has been added yet.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+            <div class="three wide middle aligned column">
+                <div class="ui fluid basic button" id="add-section"><i class="icon plus"></i>Section</div>
+            </div>
+            {% endif %}
+        </div>
+        <!--   Steps end   -->
+        <div class="segment">
+            <p>Click the button on the top right to add a new section.</p>
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+<!--   Question Modal   -->
+<div class="ui modal question">
+    <i class="close icon"></i>
+    <div class="header">Edit item</div>
+    <div class="scrolling content">
+        <form id="question-form" action="" method="post" class="ui form">
+            {% csrf_token %}
+            <div class="fields">
+                <div class="fourteen wide field">
+                    <h4 class="ui dividing header" style="margin-top:0px;">Question</h4>
+                    <textarea name="question_text" id="question_text" value="" required></textarea>
+                </div>
+                <div class="two wide field">
+                    <h4 class="ui dividing header" style="margin-top:0px;">Points</h4>
+                    <input type="number" name="question_points" id="question_points" value="" required />
+                </div>
+            </div>
+            <div id="modal-extra"></div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui button cancel">Cancel</div>
+        <input type="submit" class="ui primary button" form="question-form" value="Save"/>
+    </div>
+</div>
+<!--   Question Modal ends -->
+
+    
+<!--   Section Modal   -->
+<div class="ui modal section">
+    <i class="close icon"></i>
+    <div class="header">Edit section</div>
+    <div class="scrolling content">
+        <form id="section-form" action="" method="post" class="ui form">
+            {% csrf_token %}
+            <div class="fields">
+                <div class="thirteen wide field">
+                    <h4 class="ui dividing header" style="margin-top:0px;">Information</h4>
+                    <div class="field">
+                        <label>Title</label>
+                        <input type="text" name="section_title" id="section_title" value="" required />
+                    </div>
+                </div>
+                <div class="three wide field">
+                    <h4 class="ui dividing header" style="margin-top:0px;">Time limit</h4>
+                    <div class="fields">
+                        <div class="field">
+                            <label>Hours</label>
+                            <input type="number" name="section_time_hours" id="section_time_hours" value="0" maxlength="2" max="10" min="0" required />
+                        </div>
+                        <div class="field">
+                            <label>Minutes</label>
+                            <input type="number" name="section_time_minutes" id="section_time_minutes" value="10" maxlength="2" max="59" min="0" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <h4 class="ui dividing header" style="margin-top:0px;">Description</h4>
+                <textarea name="section_description" id="section_description" value=""></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui button cancel">Cancel</div>
+        <input type="submit" class="ui primary button" form="section-form" value="Save"/>
+    </div>
+</div>
+<!--   Section Modal ends -->
+    
+
+<!--   Action Confirmation Modal   -->
+<div class="ui basic modal action">
+  <div class="ui icon header">
+    <i class="trash icon"></i>
+    Delete Section
+  </div>
+  <div class="content" style="text-align: center;">
+    <p>This change will be permanent and the questions will not be available to recover.</p>
+    <p>Are you sure you want to continue?</p>
+  </div>
+  <div class="actions" style="text-align: center;">
+    <form action="delete/" method="post">
+        {% csrf_token %}
+        <div class="ui red basic cancel inverted button">
+          <i class="remove icon"></i>
+          No
+        </div>
+        <button type="submit" class="ui green ok inverted button">
+          <i class="checkmark icon"></i>
+          Yes
+        </button>
+    </form>
+  </div>
+</div>
+<!--   Action Confirmation Modal ends   -->
+
+{% endblock %}

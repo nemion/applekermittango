@@ -1,0 +1,16 @@
+{% extends 'authentication/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="ten wide computer ten wide tablet sixteen wide mobile column">
+        <div class="ui segment">
+            <p>Login succesful</p>
+            <p><strong>User</strong>: {{ user.get_username }}</p>
+            <p><a href="../quiz/">Go to quiz</a></p>
+            <br>
+            <a href="../logout/" class="ui button primary">Logout</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

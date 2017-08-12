@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -69,6 +70,7 @@ def vote(request, question_id):
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
+@login_required
 def new(request):
     max_choices = 10
     if request.method == "POST":
