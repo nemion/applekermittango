@@ -497,7 +497,7 @@ class Solver() :
         while not self.puzzle.isSolved() :
             sq  = dict_to_solve[n]
             sr  = self.puzzle.getCandidates(sq.row, sq.col)
-            for i, sd in dict_to_solve.iteritems() :
+            for i, sd in dict_to_solve.items() :
                 if i >= n :
                     rowSet = self.puzzle.getRowSet(sd.row)
                     colSet = self.puzzle.getColSet(sd.col)
@@ -518,7 +518,7 @@ class Solver() :
                     sq  = dict_to_solve[n]
                     sr  = self.puzzle.getCandidates(sq.row, sq.col)
                     if sq.candidates :
-                        for key, x in dict_const_abs.iteritems() :
+                        for key, x in dict_const_abs.items() :
                             if key > n :
                                 dict_to_solve[key].candidates = x.candidates
                                 dict_const[key].candidates    = x.candidates
