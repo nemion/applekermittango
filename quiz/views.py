@@ -32,7 +32,6 @@ def list(request):
         quiz_list = Quiz.objects.all()
     else:
         quiz_list = Quiz.currently_available.all()
-        print quiz_list
     return render(request, 'quiz/list.html', {'quiz_list': quiz_list})
 
 
@@ -149,9 +148,6 @@ def quiz_edit(request, quiz_id):
         
         start_date = parser.parse(request.POST['quiz_start_date']+'T'+request.POST['quiz_start_date_time'])
         end_date = parser.parse(request.POST['quiz_end_date']+'T'+request.POST['quiz_end_date_time'])
-        
-        print start_date
-        print end_date
         
         quiz.start_date = start_date
         quiz.end_date = end_date
